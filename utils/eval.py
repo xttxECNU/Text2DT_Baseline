@@ -54,6 +54,18 @@ class TreeStructureEval():
             list2.append((triple[0].lower(), triple[1].lower(), triple[2].lower()))
         dis += len(list((set(list1) | set(list2)) - (set(list1) & set(list2))))
         return (dis)
+    
+    def is_tree_equal(predict_tree,gold_tree):
+        if len(predict_tree) != len(gold_tree):
+            return 0
+        else:
+            for i in range(len(predict_tree)):
+                if predict_tree[i]['role'] == gold_tree[i]['role'] and predict_tree[i]['logical_rel'] == predict_tree[i]['logical_rel'] and set(
+                    predict_tree[i]['triples']) == set(gold_tree[i]['triples']):
+                    continue
+                else:
+                    return 0
+        return 1
 
     def is_path_equal(self,path1, path2):
         if (len(path1) != len(path2)):
@@ -201,8 +213,8 @@ class TreeStructureEval():
         gold_matrix = self.nodematrix(gold_tree)
 
         # 用于计算生成树的Acc
-        gold_tree_num = (0 if predict_tree == [] else 1)
-        correct_tree_num = (1 if predict_tree == gold_tree else 0)
+        tree_num = (0 if predict_tree == [] else 1)
+        correct_tree_num = is_tree_equal(predict_tree,gold_tree)
 
         # 用于计算triplet抽取的F1
         correct_triplet_num, predict_triplet_num, gold_triplet_num = self.triplet_extraction(predict_tree, gold_tree)

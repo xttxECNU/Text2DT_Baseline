@@ -228,7 +228,7 @@ class TreeStructureEval():
 
         correct_node_num, predict_node_num, gold_node_num = self.node_extraction(predict_tree, gold_tree)
 
-        return gold_tree_num, correct_tree_num, correct_triplet_num, predict_triplet_num, gold_triplet_num, correct_path_num, predict_path_num, gold_path_num, edit_dis, correct_node_num, predict_node_num, gold_node_num
+        return tree_num, correct_tree_num, correct_triplet_num, predict_triplet_num, gold_triplet_num, correct_path_num, predict_path_num, gold_path_num, edit_dis, correct_node_num, predict_node_num, gold_node_num
 
     def tree_structure_eval(self):
         gold_tree_num, correct_tree_num = 0.000001, 0.000001

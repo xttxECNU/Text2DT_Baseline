@@ -1,0 +1,37 @@
+save_dir: ckpt/demo
+
+data_dir: data/Text2DT/
+train_file: Text2DT_train.json
+dev_file: Text2DT_dev.json
+test_file: Text2DT_tree_test.json
+label_file: label_rel_file.json
+max_sent_len: 512
+
+mlp_hidden_size: 150
+dropout: 0.4
+logit_dropout: 0.2
+bert_model_name: bert-base-uncased
+bert_output_size: 0
+bert_dropout: 0.0
+node_separate_threshold: 0.9
+
+#gradient_clipping: 5.0
+learning_rate: 5e-5
+bert_learning_rate: 5e-5
+lr_decay_rate: 0.9
+adam_beta1: 0.9
+adam_beta2: 0.9
+adam_epsilon: 1e-12
+adam_weight_decay_rate: 1e-5
+adam_bert_weight_decay_rate: 1e-5
+
+seed: 5216
+epochs: 100
+pretrain_epochs: 1
+warmup_rate: 0.2
+train_batch_size: 8
+test_batch_size: 1
+gradient_accumulation_steps: 1
+logging_steps: 16
+device: -1
+log_file: train.log

@@ -1,4 +1,3 @@
-
 class TreeStructureEval():
     def __init__(self, pred_data, gold_data):
         self.pred_data = pred_data
@@ -54,20 +53,21 @@ class TreeStructureEval():
             list2.append((triple[0].lower(), triple[1].lower(), triple[2].lower()))
         dis += len(list((set(list1) | set(list2)) - (set(list1) & set(list2))))
         return (dis)
-    
-    def is_tree_equal(predict_tree,gold_tree):
+
+    def is_tree_equal(self, predict_tree, gold_tree):
         if len(predict_tree) != len(gold_tree):
             return 0
         else:
             for i in range(len(predict_tree)):
-                if predict_tree[i]['role'] == gold_tree[i]['role'] and predict_tree[i]['logical_rel'] == predict_tree[i]['logical_rel'] and set(
-                    predict_tree[i]['triples']) == set(gold_tree[i]['triples']):
+                if predict_tree[i]['role'] == gold_tree[i]['role'] and predict_tree[i]['logical_rel'] == \
+                        predict_tree[i]['logical_rel'] and set(
+                        predict_tree[i]['triples']) == set(gold_tree[i]['triples']):
                     continue
                 else:
                     return 0
         return 1
 
-    def is_path_equal(self,path1, path2):
+    def is_path_equal(self, path1, path2):
         if (len(path1) != len(path2)):
             return False
         for i in range(len(path1)):
@@ -214,14 +214,14 @@ class TreeStructureEval():
 
         # 用于计算生成树的Acc
         tree_num = (0 if predict_tree == [] else 1)
-        correct_tree_num = is_tree_equal(predict_tree,gold_tree)
+        correct_tree_num = self.is_tree_equal(predict_tree, gold_tree)
 
         # 用于计算triplet抽取的F1
         correct_triplet_num, predict_triplet_num, gold_triplet_num = self.triplet_extraction(predict_tree, gold_tree)
 
         # 用于计算决策路径的F1
         correct_path_num, predict_path_num, gold_path_num = self.decision_path(predict_tree, gold_tree, predict_matrix,
-                                                                          gold_matrix)
+                                                                               gold_matrix)
 
         # 用于计算树的编辑距离
         edit_dis = self.edit_distance(predict_tree, gold_tree, predict_matrix, gold_matrix)
@@ -257,11 +257,11 @@ class TreeStructureEval():
 
         tree_acc = correct_tree_num / gold_tree_num
         triplet_f1 = 2 * (correct_triplet_num / predict_triplet_num) * (correct_triplet_num / gold_triplet_num) / (
-                    correct_triplet_num / predict_triplet_num + correct_triplet_num / gold_triplet_num)
+                correct_triplet_num / predict_triplet_num + correct_triplet_num / gold_triplet_num)
         path_f1 = 2 * (correct_path_num / predict_path_num) * (correct_path_num / gold_path_num) / (
-                    correct_path_num / predict_path_num + correct_path_num / gold_path_num)
+                correct_path_num / predict_path_num + correct_path_num / gold_path_num)
         tree_edit_distance = edit_dis / gold_tree_num
         node_f1 = 2 * (correct_node_num / predict_node_num) * (correct_node_num / gold_node_num) / (
-                    correct_node_num / predict_node_num + correct_node_num / gold_node_num)
+                correct_node_num / predict_node_num + correct_node_num / gold_node_num)
 
         return tree_acc, triplet_f1, path_f1, tree_edit_distance, node_f1

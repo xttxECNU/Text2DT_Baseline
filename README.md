@@ -38,7 +38,7 @@
 
 ### 数据集
 
-数据集获取：http://www.cips-chip.org.cn/2022/eval3
+数据集获取：
 
 将数据置于data/Text2DT下
 
